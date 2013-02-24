@@ -22,12 +22,12 @@
 
 
 
-\title{Document Topic Classification using Latent Dirichlet Allocation}
+\title{Topic Classification using Latent Dirichlet Allocation}
 
 \author{Adrian Guthals (aguthals@cs.ucsd.edu),\\
 David Larson (dplarson@ucsd.edu),\\
 \\
-CSE 250B: Project \#2 \\
+CSE 250B: Project \#3 \\
 University of California, San Diego \\
 }
 
@@ -38,6 +38,7 @@ University of California, San Diego \\
 
 
 \begin{abstract}
+    LDA, Gibbs sampling, topic classification of documents, datasets used, results and their meaning, conclusions
 \end{abstract}
 
 
@@ -48,17 +49,36 @@ University of California, San Diego \\
 \section{Introduction}
 \label{sec:intro}
 
+Introduce topic classification of documents. Then transition into formal definitions of LDA and Gibbs Sampling.
 
 Elkan's lecture notes \cite{CSE250B}
 
+
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
+
+Latent Dirichlet Allocation (LDA) is
+
+\begin{equation}
+    p(\gamma | \alpha) = \frac{1}{D(\alpha)} \prod_{s=1}^{m} \gamma_{s}^{\alpha_s - 1}
+\end{equation}
+
+\begin{equation}
+    D(\alpha) = \int_{\gamma} \prod_{s=1}^m \gamma_s^{\alpha_s - 1}
+\end{equation}
+
+\begin{equation}
+    D(\alpha) = \frac{\prod_{s=1}^m \Gamma(\alpha_s)}{\Gamma (\sum_{s=1}^m \alpha_s )}
+\end{equation}
 
 
 
 \subsection{Gibbs Sampling}
 \label{sec:gibbs}
 
+\begin{equation}
+    p(z_i = j | \bar{z}', \bar{w}) \propto \frac{q_{j w_i}' + \beta_{w_i}}{\sum_t q_{jt}' + \beta_t} \frac{n_{mj}' + \alpha_j}{\sum_k n_{mk}' + \alpha_k}
+\end{equation}
 
 
 
@@ -68,6 +88,8 @@ Elkan's lecture notes \cite{CSE250B}
 \section{Design and Analysis of Algorithms}
 \label{sec:algorithms}
 
+Discuss how we're implementing LDA and Gibbs Sampling.
+
 
 
 %-----------------------------------------------------------------------------
@@ -75,6 +97,28 @@ Elkan's lecture notes \cite{CSE250B}
 %-----------------------------------------------------------------------------
 \section{Design of Experiments}
 \label{sec:experiments}
+
+%
+% DATASETS
+%
+\subsection{Datasets}
+Two datasets: classic400 and a second source. Where are they both from, where is the data derived from and how, and why did we chose both for the experiment (plus any pre-processing we may have done).
+
+%
+% CONVERGENCE
+%
+\subsection{Convergence of Gibbs}
+When do we decide to stop Gibbs
+
+
+%
+% RESULTS
+%
+\subsection{Results}
+
+\subsubsection{Classic 400}
+
+\subsubsection{Second source}
 
 
 
@@ -84,7 +128,7 @@ Elkan's lecture notes \cite{CSE250B}
 \section{Findings and Lessons Learned}
 \label{sec:conclusion}
 
-
+Thoughts on: LDA as a model, Gibbs Sampling as a training method, performance issues, results of the experiments
 
 
 %-----------------------------------------------------------------------------
