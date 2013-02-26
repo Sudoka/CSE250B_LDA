@@ -7,7 +7,6 @@ Adapted from work by David Andrzejewski (david.andrzej@gmail.com)
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as lines
-import matplotlib.ticker as ticker
 
 
 def projectSimplex(data):
@@ -75,7 +74,7 @@ def plotSimplex(topic1, topic2, topic3, grayscale=True):
     simplex3 = projectSimplex(topic3)
 
     # plot
-    plt.figure()
+    plt.figure(facecolor='w')
     ax = plt.subplot(111)
 
     # plot data
@@ -94,7 +93,7 @@ def plotSimplex(topic1, topic2, topic3, grayscale=True):
                marker='^', color=colors[2], **kwargs)
 
     # add legend
-    ax.legend()
+    ax.legend(frameon=True)
 
     # add triangle outline
     lines_triangle = lines.Line2D([0.0, 0.5, 1.0, 0.0],
@@ -108,14 +107,14 @@ def plotSimplex(topic1, topic2, topic3, grayscale=True):
     ax.text(1.05, -0.05, r'$\theta_2$', **text_kwargs)
     ax.text(0.50, np.sqrt(3) / 2 + 0.05, r'$\theta_3$', **text_kwargs)
 
-    # remove axes labels
-    ax.xaxis.set_major_locator(ticker.NullLocator())
-    ax.yaxis.set_major_locator(ticker.NullLocator())
+    # remove x-y axis
+    ax.axis('off')
 
     # set limits
     ax.set_xlim([-0.2, 1.2])
     ax.set_ylim([-0.2, 1.2])
 
+    #plt.savefig('topic_distribution.pdf')
     plt.show()
 
 
