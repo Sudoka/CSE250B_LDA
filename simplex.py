@@ -1,7 +1,8 @@
 """
 Plot 3D points onto 2D triangle (simplex).
 
-Adapted from work by David Andrzejewski (david.andrzej@gmail.com)
+Based on work by David Andrzejewski (david.andrzej@gmail.com)
+source: https://gist.github.com/davidandrzej/939840
 """
 
 import numpy as np
