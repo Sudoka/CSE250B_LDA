@@ -114,7 +114,9 @@ Two datasets: classic400 and KOS blog posts (from UCI Machine Learning database)
 % HYPERPARAMETERS
 %
 \subsection{Hyperparameters}
-$\alpha = 50 / K$ and $\beta=0.01$ where $K$ is the number of topics. For all experiments we set $K=3$ and therefore $\alpha = 16.67$.
+$\alpha = 50 / K$ and $\beta=0.01$ where $K$ is the number of topics. For all experiments we set $K=3$ and therefore $\alpha = 16.67$. Suggested originally by Griffiths and Steyvers (2004). May want to try other values.
+
+Recall: large $\alpha$ for many topics per document and large $\beta$ for many topics per word. We only use 3 topics so $\alpha$ will probably be small.
 
 
 %
