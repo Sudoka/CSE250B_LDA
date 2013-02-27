@@ -26,7 +26,6 @@
 \fancyhead[RO,RE]{Project 3}
 
 
-
 \title{Topic Classification using Latent Dirichlet Allocation}
 
 \author{Adrian Guthals (aguthals@cs.ucsd.edu),\\
@@ -42,6 +41,9 @@ University of California, San Diego \\
 \maketitle
 
 
+%-----------------------------------------------------------------------------
+% ABSTRACT
+%-----------------------------------------------------------------------------
 \begin{abstract}
     LDA, Gibbs sampling, topic classification of documents, datasets used, results and their meaning, conclusions
 \end{abstract}
@@ -107,7 +109,9 @@ Discuss how we're implementing LDA and Gibbs Sampling.
 % DATASETS
 %
 \subsection{Datasets}
-Two datasets: classic400 and KOS blog posts (from UCI Machine Learning database). KOS dataset was reduced from 3430 documents to 400 documents (vocabulary unchanged from original 6906 words).
+Two datasets: classic400 and KOS blog posts (from UCI Machine Learning database \cite{KOS_dataset}). KOS dataset was reduced from 3430 documents to 400 documents (vocabulary unchanged from original 6906 words).
+
+The KOS dataset is derivaed from dailykos.com blog entries and consists of 3430 documents, a vocabulary of 6906 words and 467714 words total words in all documents. For the experiment we only used data on the first 400 documents.
 
 
 %
