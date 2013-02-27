@@ -109,7 +109,7 @@ Discuss how we're implementing LDA and Gibbs Sampling.
 % DATASETS
 %
 \subsection{Datasets}
-Two datasets were classified using LDA: Classic400, a collection of English documents from three research areas (aeronautics, medicine, and library science); and KOS, a collection of English blog posts from dailykos.com (see Table \ref{tab:datasets} for details on their sizes) \cite{Classic400, KOS_dataset}. To reduce run times, we elected to use a reduced version of the KOS dataset containing only the first 400 documents out of the original 3430.
+Two datasets were classified using LDA: Classic400, a collection of English documents from three research areas (aeronautics, medicine, and library science); and KOS, a collection of English blog posts from dailykos.com (see Table \ref{tab:datasets} for details on their sizes) \cite{Classic400, KOS_dataset}. To reduce run times, we elected to use a reduced version of the KOS dataset containing only the first 400 of the original 3430 documents.
 
 
 \begin{table}
@@ -128,15 +128,28 @@ Two datasets were classified using LDA: Classic400, a collection of English docu
 \end{table}
 
 
-
-
 %
 % HYPERPARAMETERS
 %
 \subsection{Hyperparameters}
-$\alpha = 50 / K$ and $\beta=0.01$ where $K$ is the number of topics. For all experiments we set $K=3$ and therefore $\alpha = 16.67$. Suggested originally by Griffiths and Steyvers (2004). May want to try other values.
+$\alpha = 50 / K$ and $\beta=0.01$ where $K$ is the number of topics. For all experiments we set $K=3$ and therefore $\alpha = 16.67$ (see Table \ref{tab:hyperparameters}). Suggested originally by Griffiths and Steyvers (2004). May want to try other values.
 
 Recall: large $\alpha$ for many topics per document and large $\beta$ for many topics per word. We only use 3 topics so $\alpha$ will probably be small.
+
+\begin{table}
+    \centering
+    \ra{1.2}
+    \begin{tabular}{@{} l l l @{}}
+        \toprule
+        \bf{Dataset} & $\alpha$ & $\beta$ \\
+        \midrule
+        Classic400 & 16.67 & 0.01 \\
+        KOS        & 16.67 & 0.01 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Hyperparaters used in training the LDA model using Gibbs sampling.}
+    \label{tab:hyperparameters}
+\end{table}
 
 
 %
