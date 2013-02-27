@@ -109,9 +109,25 @@ Discuss how we're implementing LDA and Gibbs Sampling.
 % DATASETS
 %
 \subsection{Datasets}
-Two datasets: classic400 and KOS blog posts (from UCI Machine Learning database \cite{KOS_dataset}). KOS dataset was reduced from 3430 documents to 400 documents (vocabulary unchanged from original 6906 words).
+Two datasets were classified using LDA: Classic400, a collection of English documents from three research areas (aeronautics, medicine, and library science); and KOS, a collection of English blog posts from dailykos.com (see Table \ref{tab:datasets} for details on their sizes) \cite{Classic400, KOS_dataset}. To reduce run times, we elected to use a reduced version of the KOS dataset containing only the first 400 documents out of the original 3430.
 
-The KOS dataset is derivaed from dailykos.com blog entries and consists of 3430 documents, a vocabulary of 6906 words and 467714 words total words in all documents. For the experiment we only used data on the first 400 documents.
+
+\begin{table}
+    \centering
+    \ra{1.2}
+    \begin{tabular}{@{} l l l @{}}
+        \toprule
+        \bf{Dataset} & \bf{Documents} & \bf{Vocabulary} \\
+        \midrule
+        Classic400 & 400 & 6205 \\
+        KOS        & 400 & 6906 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Composition of the two datasets used in this study. Note that the KOS dataset used is a reduced version of the original KOS dataset, which contains 3430 documents.}
+    \label{tab:datasets}
+\end{table}
+
+
 
 
 %
