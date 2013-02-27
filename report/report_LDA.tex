@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
+\usepackage{multirow}
 
 % margins
 \setlength{\headwidth}{6.40in}
@@ -102,7 +103,7 @@ Discuss how we're implementing LDA and Gibbs Sampling.
 % DATASETS
 %
 \subsection{Datasets}
-Two datasets: classic400 and a second source. Where are they both from, where is the data derived from and how, and why did we chose both for the experiment (plus any pre-processing we may have done).
+Two datasets: classic400 and KOS blog posts (from UCI Machine Learning database). KOS dataset was reduced from 3430 documents to 400 documents (vocabulary unchanged from original 6906 words).
 
 %
 % CONVERGENCE
@@ -116,9 +117,25 @@ When do we decide to stop Gibbs
 %
 \subsection{Results}
 
-\subsubsection{Classic 400}
-
-\subsubsection{Second source}
+\begin{table}
+	\centering
+	\begin{tabular}{c|c|c}
+		Topic 1     & Topic 2   & Topic 3 \\
+		\hline
+        patients    & boundary  & wing \\
+        case        & layer     & mach \\
+        ventricular & velocity  & supersonic \\
+        system      & field     & effects \\
+        research    & solution  & ratio \\
+        scientific  & plate     & wings \\
+        fatty       & problem   & shock \\
+        nickel      & free      & numbers \\
+        acids       & heat      & jet \\
+        aortic      & cylinder  & lift \\
+	\end{tabular}
+	\caption{Ten most commonly occured words for each topic classification of the classic 400 and KOS datasets.}
+	\label{tab:common_classic400}
+\end{table}
 
 
 
