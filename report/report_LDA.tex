@@ -4,7 +4,11 @@
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
+
+% better tables
+\usepackage{booktabs}
 \usepackage{multirow}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
 % margins
 \setlength{\headwidth}{6.40in}
@@ -117,23 +121,34 @@ When do we decide to stop Gibbs
 %
 \subsection{Results}
 
+\subsubsection{Clustering}
+Clustering of documents into three topics (reference simplex plots).
+
+\subsubsection{Most Common Words Per Topic}
+Ten most common words (in tables).
+
 \begin{table}
 	\centering
-	\begin{tabular}{c|c|c}
-		Topic 1     & Topic 2   & Topic 3 \\
-		\hline
-        patients    & boundary  & wing \\
-        case        & layer     & mach \\
-        ventricular & velocity  & supersonic \\
-        system      & field     & effects \\
-        research    & solution  & ratio \\
-        scientific  & plate     & wings \\
-        fatty       & problem   & shock \\
-        nickel      & free      & numbers \\
-        acids       & heat      & jet \\
-        aortic      & cylinder  & lift \\
+    \ra{1.2}
+	\begin{tabular}{@{} l l l l c l l l @{}}
+        \toprule
+        & \multicolumn{3}{c}{Classic400} & \phantom{abc} & \multicolumn{3}{c}{KOS}\\
+        \cmidrule{2-4} \cmidrule{6-8}
+        \bf{Rank} & \bf{Topic 1} & \bf{Topic 2} & \bf{Topic 3} && \bf{Topic 1} & \bf{Topic 2} & \bf{Topic 3} \\
+        \midrule
+         1 & patients     & boundary     & wing         && & & \\
+         2 & case         & layer        & mach         && & & \\
+         3 & ventricular  & velocity     & supersonic   && & & \\
+         4 & system       & field        & effects      && & & \\
+         5 & research     & solution     & ratio        && & & \\
+         6 & scientific   & plate        & wings        && & & \\
+         7 & fatty        & problem      & shock        && & & \\
+         8 & nickel       & free         & numbers      && & & \\
+         9 & acids        & heat         & jet          && & & \\
+        10 & aortic       & cylinder     & lift         && & & \\
+        \bottomrule
 	\end{tabular}
-	\caption{Ten most commonly occured words for each topic classification of the classic 400 and KOS datasets.}
+	\caption{Ten most commonly occured words for each topic classification for the classic400 and KOS datasets. Rank corresponds to how frequently a word appears in each topic (1=most occurred).}
 	\label{tab:common_classic400}
 \end{table}
 
