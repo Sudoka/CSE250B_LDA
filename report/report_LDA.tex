@@ -96,6 +96,8 @@ Latent Dirichlet Allocation (LDA) is a multinomial
 \section{Design and Analysis of Algorithms}
 \label{sec:algorithms}
 
+We implemented the LDA generative process as outlined in \cite{CSE250B}.
+
 Discuss how we're implementing LDA and Gibbs Sampling.
 
 
@@ -133,14 +135,23 @@ Two datasets were classified using LDA: Classic400, a collection of English docu
 % HYPERPARAMETERS
 %
 \subsection{Hyperparameters}
-For both datasets we apply LDA with three topics ($K = 3$). Since $\alpha$ is postively correlated to the number of topics present per document and we are only considering three topics, we chose values of $\alpha << 1$, which implies that every document contains only a few topics. Likewise, we chose values of $\beta << 1$, which implies that every word in every document corresponds to a small number of topics. Previous studies have looked into the effect of $\alpha$ and $\beta$ on the cluserting results for LDA models, some going so far as to suggest likely values based on the number of topics in a dataset (see \cite{Griffiths2004}). However, for the purposes of this study our selection criteria of $\alpha$ and $\beta$ is only that they are both small, and we have therefore chosen to omit any sort of optimization of their values (see Table \ref{tab:datasets}).
+For both datasets we apply LDA with three topics ($K = 3$). Since $\alpha$ is postively correlated to the number of topics present per document and we are only considering three topics, we chose values of $\alpha << 1$, which implies that every document contains only a few topics. Likewise, we chose values of $\beta << 1$, which implies that every word in every document corresponds to a small number of topics. Previous studies have looked into the effect of $\alpha$ and $\beta$ on the cluserting results for LDA models, some going so far as to suggest likely values based on the number of topics in a dataset (see \cite{Griffiths2004}). 
+
+
+However, for the purposes of this study our selection criteria of $\alpha$ and $\beta$ is only that they are both small, and we have therefore chosen to use a grid search method to determine the optimal values. We ran trained the LDA model using Gibbs sampling for $\alpha$ and $\beta$ values of $10^2, 10^1, ..., 10^{-4}$, and evaluated the values based on the coherence of each topics' most commonly occurred words. From this grid search we chosen to set $\alpha = 0.01$ and $\beta = 0.1$ for both datasets (see Table \ref{tab:datasets}).
 
 
 %
 % CONVERGENCE
 %
 \subsection{Stopping Criteria of Gibbs Sampling}
-For both datasets we chose the Gibbs Sampling stopping criteria as 100 epochs, although the majority of improvement in the LDA classification occurrs during the first 10 epochs.
+For both datasets we chose the Gibbs Sampling stopping criteria as 100 epochs. We tried 50, 75, ..., 200 epochs as the stopping criteria, but found that the Euclidean distance between the $\phi$ vectors to not change signifcantly for more than 100 epochs.
+
+%
+% OVERFITTING
+%
+\subsection{Overfitting}
+As with many models, LDA is susceptible to overfitting. One approach to determine overfitting of a LDA model is to calculate the perplexity of the model (see \cite{Heinrich}).
 
 
 %
