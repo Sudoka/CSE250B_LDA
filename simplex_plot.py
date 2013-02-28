@@ -79,10 +79,10 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
     ax.add_line(lines_triangle)
 
     # add labels to triange vertex
-    text_kwargs = {'fontsize': 14}
-    ax.text(-0.05, -0.05, r'$\theta_1$', **text_kwargs)
-    ax.text(1.05, -0.05, r'$\theta_2$', **text_kwargs)
-    ax.text(0.50, np.sqrt(3) / 2 + 0.05, r'$\theta_3$', **text_kwargs)
+    text_kwargs = {'fontsize': 24}
+    ax.text(-0.10, -0.10, r'$\theta_1$', **text_kwargs)
+    ax.text(1.05, -0.10, r'$\theta_2$', **text_kwargs)
+    ax.text(0.50, np.sqrt(3) / 2 + 0.10, r'$\theta_3$', **text_kwargs)
 
     # remove x-y axis
     ax.axis('off')
@@ -92,7 +92,7 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
     ax.set_ylim([-0.2, 1.2])
 
     # plot formatting
-    kwargs = {'s': 60}
+    kwargs = {'s': 100}
     markers = ['o', 's', '^']
     if grayscale is False:
         colors = ['#268bd2', '#000000', '#dc322f']
@@ -115,11 +115,9 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
         ax.scatter(simplex1[:, 0], simplex1[:, 1], label='Topic 1',
                    marker=markers[0], color=colors[0], **kwargs)
         ax.scatter(simplex2[:, 0], simplex2[:, 1], label='Topic 2',
-                   marker=markers[1], color=colors[1], facecolors='w', **kwargs)
+                   marker=markers[1], color=colors[1], facecolors='#cccccc', **kwargs)
         ax.scatter(simplex3[:, 0], simplex3[:, 1], label='Topic 3',
                    marker=markers[2], color=colors[2], **kwargs)
-
-        ax.legend()
 
         plot_name = 'classic400_thetas.pdf'
 
@@ -129,7 +127,7 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
 
         # plot data onto simplex
         ax.scatter(simplex1[:, 0], simplex1[:, 1], label='Topic 1',
-                   marker=markers[0], color=colors[0], **kwargs)
+                   marker='D', color='#2aa198', edgecolor='k', **kwargs)
 
         plot_name = 'kos_thetas.pdf'
 
@@ -152,7 +150,7 @@ thetas_classic400 = np.genfromtxt('classic400/classic400_thetas_2.csv',
 # convert from log-10
 thetas_classic400 = np.exp(thetas_classic400)
 
-plotSimplex(thetas_classic400, 'classic400', grayscale=False)
+plotSimplex(thetas_classic400, 'classic400', grayscale=False, save=True)
 
 
 #
@@ -163,4 +161,4 @@ thetas_kos = np.genfromtxt('KOS400/KOS400_thetas.csv', delimiter=',')
 # convert from log-10
 thetas_kos = np.exp(thetas_kos)
 
-plotSimplex(thetas_kos, 'KOS', grayscale=False)
+plotSimplex(thetas_kos, 'KOS', grayscale=False, save=True)

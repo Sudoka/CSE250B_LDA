@@ -2,6 +2,7 @@
 
 % required packages
 \usepackage{graphicx}
+\usepackage{subfigure} 
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
 
@@ -64,7 +65,7 @@ Elkan's lecture notes \cite{CSE250B}
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
 
-Latent Dirichlet Allocation (LDA) is
+Latent Dirichlet Allocation (LDA) is a multinomial
 
 \begin{equation}
     p(\gamma | \alpha) = \frac{1}{D(\alpha)} \prod_{s=1}^{m} \gamma_{s}^{\alpha_s - 1}
@@ -148,10 +149,22 @@ When do we decide to stop Gibbs
 \subsection{Results}
 
 \subsubsection{Clustering}
-Clustering of documents into three topics (reference simplex plots).
+Figure \ref{fig:cluserting} shows the clustering of documents relative to each topic as projected onto a triangular simplex, where the each vertex indicates $\theta = 1$ the denoted topic.
+
+
+\begin{figure}
+    \centering
+    \mbox{\subfigure[Classic400]{\includegraphics[width=0.4\textwidth]{classic400_thetas.pdf}} \quad
+        \subfigure[KOS]{\includegraphics[width=0.4\textwidth]{kos_thetas.pdf} }}
+    \caption{Clustering of documents based on their $\theta_1$, $\theta_2$ and $\theta_3$, projected on a triangular simplex. Documents in Classic400 are labeled based on their true labels (topic 1: blue solid circles, topic 2: black empty squares, topic 3: red solid triangles) while documents in KOS are all labeled the same way as the true labels are unknown.}
+    \label{fig:cluserting}
+\end{figure}
+
+
 
 \subsubsection{Most Common Words Per Topic}
-Ten most common words (in tables).
+If a LDA model is setup to classify more than 4 topics, then a simplex plot will not be a viable method for checking the clustering of the results. Instead, lists of the most commonly occurred words per topic can be analyzed to gauge the performance of the LDA. Table \ref{tab:most_common} shows the most commonly occurred words for each topic of the two datasets.
+
 
 \begin{table}
 	\centering
@@ -175,7 +188,7 @@ Ten most common words (in tables).
         \bottomrule
 	\end{tabular}
 	\caption{Ten most commonly occured words for each topic classification for the classic400 and KOS datasets. Rank indicates how frequently a word appears in each topic (1=most occurred).}
-	\label{tab:common_classic400}
+	\label{tab:most_common}
 \end{table}
 
 
