@@ -113,7 +113,7 @@ Discuss how we're implementing LDA and Gibbs Sampling.
 Two datasets were classified using LDA: Classic400, a collection of English documents from three research areas (aeronautics, medicine, and library science); and KOS, a collection of English blog posts from dailykos.com (see Table \ref{tab:datasets} for details on their sizes) \cite{Classic400, KOS_dataset}. While the Classic400 dataset provided the true labels of its source topics, the KOS dataset provided no such information. Also, to reduce run times, we elected to use a reduced version of the KOS dataset containing only the first 400 of the original 3430 documents.
 
 
-\begin{table}
+\begin{table}[t]
     \centering
     \ra{1.2}
     \begin{tabular}{@{} l l l l l @{}}
@@ -139,8 +139,8 @@ For both datasets we apply LDA with three topics ($K = 3$). Since $\alpha$ is po
 %
 % CONVERGENCE
 %
-\subsection{Convergence of Gibbs}
-When do we decide to stop Gibbs
+\subsection{Stopping Criteria of Gibbs Sampling}
+For both datasets we chose the Gibbs Sampling stopping criteria as 100 epochs, although the majority of improvement in the LDA classification occurrs during the first 10 epochs.
 
 
 %
@@ -148,25 +148,25 @@ When do we decide to stop Gibbs
 %
 \subsection{Results}
 
-\subsubsection{Clustering}
+\subsubsection{Document Topic Clustering}
 Figure \ref{fig:cluserting} shows the clustering of documents relative to each topic as projected onto a triangular simplex, where the each vertex indicates $\theta = 1$ the denoted topic.
 
 
-\begin{figure}
+\begin{figure}[t]
     \centering
     \mbox{\subfigure[Classic400]{\includegraphics[width=0.4\textwidth]{classic400_thetas.pdf}} \quad
         \subfigure[KOS]{\includegraphics[width=0.4\textwidth]{kos_thetas.pdf} }}
-    \caption{Clustering of documents based on their $\theta_1$, $\theta_2$ and $\theta_3$, projected on a triangular simplex. Documents in Classic400 are labeled based on their true labels (topic 1: blue solid circles, topic 2: black empty squares, topic 3: red solid triangles) while documents in KOS are all labeled the same way as the true labels are unknown.}
+    \caption{Clustering of documents based on their $\theta_1$, $\theta_2$ and $\theta_3$, projected on a triangular simplex. Documents in Classic400 are labeled based on their true labels (topic 1: blue solid circles, topic 2: black empty squares, topic 3: red solid triangles) while documents in KOS are have the same marker label as the true labels are unknown.}
     \label{fig:cluserting}
 \end{figure}
 
 
-
 \subsubsection{Most Common Words Per Topic}
-If a LDA model is setup to classify more than 4 topics, then a simplex plot will not be a viable method for checking the clustering of the results. Instead, lists of the most commonly occurred words per topic can be analyzed to gauge the performance of the LDA. Table \ref{tab:most_common} shows the most commonly occurred words for each topic of the two datasets.
+If a LDA model is setup to classify more than 4 topics, then a simplex plot will not be a viable method for checking the clustering of the results. Instead, lists of the most commonly occurred words per topic can be analyzed to gauge the performance of the LDA. Table \ref{tab:most_common} shows the most commonly occurred words for each topic of the two datasets. The most common words from Classic400 for each topic are all related and correspond well to the true topic labels (topic 1: medicine, topic 2: aeronautics, and topic 3: library science). Meanwhile, the most common words for KOS for each topic seem to overlap and be derived from same general topic, namely politics, or more specifically, the 2008 US Presidential campaign between George Bush and John Kerry. As the source of KOS is a political blog site, it is not surprising that politics shows up prominetly as a topic. However, the lack of diversity between the most common words of each topic and therefore lack of unique topics is more likely the result of selecting only the first 400 documents from the originald dataset rather than an issue with our LDA model implementation.
 
 
-\begin{table}
+
+\begin{table}[t]
 	\centering
     \ra{1.2}
 	\begin{tabular}{@{} l l l l c l l l @{}}
@@ -187,7 +187,7 @@ If a LDA model is setup to classify more than 4 topics, then a simplex plot will
         10 & glucose     & effects    & subjects   && governor & news       & voters \\
         \bottomrule
 	\end{tabular}
-	\caption{Ten most commonly occured words for each topic classification for the classic400 and KOS datasets. Rank indicates how frequently a word appears in each topic (1=most occurred).}
+	\caption{Ten most commonly occured words for each topic classification for the classic400 and KOS datasets. Rank indicates how frequently a word appears in each topic, with 1 being the most occurred.}
 	\label{tab:most_common}
 \end{table}
 
