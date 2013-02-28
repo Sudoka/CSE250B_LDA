@@ -110,9 +110,19 @@ where $\bar{w}$ is the sequence of words in the vocabulary.
 \section{Design and Analysis of Algorithms (Adrian)}
 \label{sec:algorithms}
 
-We implemented the LDA generative process as outlined in \cite{CSE250B}.
+We implemented the LDA generative process as outlined in \cite{CSE250B}. First we randomly initialized an array $z$ to hold a single topic assignment for each of the $T$ total word occurences in the corpus. Then the following arrays were populated based upon these topic assignments: $q_{jw}$ being a $K X V$ array specifying the count of how many times the word $w$ occurs with topic $j$ in the whole corpus; $Q_{j}$ being a $K x $ array specifying the the count of how many times a word occured with topic $j$ in the whole corpus; $n_{mj}$ being a $M x K$ array specifying the the count of how many times a word within document $m$ occured with topic $j$; $N_{m}$ being a $M x 1$ array specifying the the count of how many word occurences are in each document $m$.
 
-Discuss how we're implementing LDA and Gibbs Sampling.
+For each iteration of the Gibbs Sampling, $z_i$ was populated for each word occurence $i = 1, 2, ..., T$. If $j' = z_i$ was the previous topic assignment for word $i$, then array positions that counted word $i$ with topic $j$ were decremented: $q_{j' w_i} -= 1$, $n_{mj'} -= 1$, $Q_{j'} -= 1$, $N_{m} -= 1$. Then the new value of $z_i$ was chosen by sampling a multinomial distribution with parameters $p(z_i = j | \bar{z}', \bar{w})$ from the following equation. Given the new assignment $j'' = z_i$, correspnding array counts were then incremented: $q_{j'' w_i} += 1$, $n_{mj''} += 1$, $Q_{j''} += 1$, $N_{m} += 1$.
+
+\begin{equation}
+    p(z_i = j | \bar{z}', \bar{w}) \propto \frac{q_{j w_i} + \beta}{Q_j + V\beta} \frac{n_{mj} + \alpha}{N_m + K\alpha}
+\end{equation}
+
+Convergence was reached after a predetermined number of iterations (100). At this point, $\phi$ and $\theta$ values were output by the following equations:
+\begin{eqnarray}
+    \phi_{kw} = \frac{q_{kw} + \beta}{Q_j + V\beta}\\
+    \theta_{mk} = \frac{n_{mj} + \alpha}{N_m + K\alpha} 
+\end{eqnarray}
 
 
 
@@ -160,6 +170,12 @@ For this study we chose to use a grid search method to determine the optimal val
 %
 \subsection{Stopping Criteria of Gibbs Sampling}
 For both datasets we chose the Gibbs Sampling stopping criteria as 100 epochs. We tried 50, 75, ..., 200 epochs as the stopping criteria, but found that the Euclidean distance between the $\phi$ vectors to not change signifcantly for more than 100 epochs.
+
+%
+% GOODNESS OF FIT
+%
+\subsection{Goodness of Fit}
+A sensible way to define goodness of fit for a given dataset is to compare lists of most commonly occurred words for each topic. A more quantitative method would involve statistically analyzing the clustering of each document classification.
 
 %
 % OVERFITTING
@@ -224,7 +240,8 @@ If a LDA model is setup to classify more than 4 topics, then a simplex plot will
 \section{Findings and Lessons Learned (Adrian)}
 \label{sec:conclusion}
 
-Thoughts on: LDA as a model, Gibbs Sampling as a training method, performance issues, results of the experiments
+The simplex plot of the Classic400 topic clustering showed that the LDA performed well on the dataset. We already new the number of categories and did not have to pick $K$. It could be interesting to tweak this parameter as it could lead to more precise clustering by picking sub-groupings within each cluster. In the KOS dataset for example, we chose $K=3$, but analysis of the simplex plots reveals that the documents likely fit into just two topics. But setting $K=2$ might also influence the $\alpha$ and $\beta$ values as well and would have required a separate grid search over these values, which would have proved difficult since there was no correct grouping of the KOS data known in advance. To better train $\alpha$ and $\beta$ for the KOS data, we would require a set of blog posts with a similar number of defined topics.
+
 
 
 %-----------------------------------------------------------------------------
