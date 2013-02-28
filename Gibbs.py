@@ -5,20 +5,29 @@ from math import log
 import sys
 import csv
 import random
+import bisect
+
 
 INPUT_WORD_COUNT = 'KOS400/KOS400.csv'
 INPUT_WORD_LIST = 'KOS400/KOSwordlist.csv'
-NUM_EPOCHS = 100
-MIN_DELTA = 1.0
 OUTPUT_THIS = 'KOS400/KOS400_this.csv'
 OUTPUT_THETAS = 'KOS400/KOS400_thetas.csv'
+'''
+INPUT_WORD_COUNT = 'classic400/classic400.csv'
+INPUT_WORD_LIST = 'classic400/classicwordlist.csv'
+OUTPUT_THIS = 'classic400/classic400_this.csv'
+OUTPUT_THETAS = 'classic400/classic400_thetas.csv'
+'''
+NUM_EPOCHS = 100
+MIN_DELTA = 1.0
+
 
 # K is the number of topics
 K = 3
 
 # alpha and beta for LDA
-alpha = 1.0
-beta = 0.01
+alpha = 0.01
+beta = 0.1
 
 print "Loading training data ...",
 sys.stdout.flush()
@@ -62,13 +71,13 @@ z = np.zeros(T, dtype=np.int)
 q = np.zeros((V,K), dtype=np.int)
 
 # k_j is the number of words assigned to topic j in the whole corpus
-k = np.zeros((K), dtype=np.int)
+k = np.zeros(K, dtype=np.int)
 
 # n_m_j is the count of how many words within document m are assigned to topic j
 n = np.zeros((M,K), dtype=np.int)
 
 # N_m is the number of words in document m
-N = np.zeros((M), dtype=np.int)
+N = np.zeros(M, dtype=np.int)
 
 # populate q and n
 for i in range(T):
@@ -88,7 +97,7 @@ newTheta = np.negative(np.ones((M,K)))
 def computeNewThi():
 	for j in range(K):
 		for w in range(V):
-			newThi[w,j] = log(q[w,j] + beta) - log(k[j] + beta)
+			newThi[w,j] = log(q[w,j] + beta) - log(k[j] + (V*beta))
 		#end for
 	#end for
 #end def
@@ -96,7 +105,7 @@ def computeNewThi():
 def computeNewTheta():
 	for m in range(M):
 		for j in range(K):
-			newTheta[m,j] = log(n[m,j] + alpha) - log(N[m] + alpha)
+			newTheta[m,j] = log(n[m,j] + alpha) - log(N[m] + (K*alpha))
 		#end for
 	#end for
 #end def
@@ -122,7 +131,7 @@ numEpochs = 0
 while numEpochs < NUM_EPOCHS:
 	print "Computing z values ...",
 	sys.stdout.flush()
-	ps = np.zeros((K))
+	
 	for i in range(T):
 		if i % stepDis == 0:
 			print i / stepDis,
@@ -137,23 +146,16 @@ while numEpochs < NUM_EPOCHS:
 		N[m] -= 1
 		
 		sumR = 0.0
+		cummulative = []
 		
 		for j in range(K):
-			ps[j] = ((q[w,j] + beta) * (n[m,j] + alpha)) / \
+			sumR += ((q[w,j] + beta) * (n[m,j] + alpha)) / \
 					((k[j] + (V*beta)) * (N[m] + (K*alpha)))
-			sumR += ps[j]
+			cummulative.append(sumR)
 		#end for
-		rSample = random.random() * sumR
-		sumR = 0.0
-		for j in range(K):
-			sumR += ps[j]
-			if rSample < sumR:
-				z[i] = j
-				break
-			#end if
-		#end for
-		
-		newjAssign = z[i]
+		rSample = random.uniform(0, sumR)
+		newjAssign = bisect.bisect(cummulative, (rSample,))
+		z[i] = newjAssign
 		q[w,newjAssign] += 1
 		n[m,newjAssign] += 1
 		k[newjAssign] += 1

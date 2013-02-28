@@ -46,7 +46,7 @@ University of California, San Diego \\
 % ABSTRACT
 %-----------------------------------------------------------------------------
 \begin{abstract}
-    LDA, Gibbs sampling, topic classification of documents, datasets used, results and their meaning, conclusions
+LDA, Gibbs sampling, topic classification of documents, datasets used, results and their meaning, conclusions
 \end{abstract}
 
 
@@ -120,8 +120,8 @@ Two datasets were classified using LDA: Classic400, a collection of English docu
         \toprule
         \bf{Dataset} & \bf{Documents} & \bf{Vocabulary} & $\alpha$ & $\beta$ \\
         \midrule
-        Classic400 & 400 & 6205 & 0.01 & 1.0 \\
-        KOS        & 400 & 6906 & 1.0  & 0.01\\
+        Classic400 & 400 & 6205 & 0.01 & 0.1 \\
+        KOS        & 400 & 6906 & 0.01 & 0.1\\
         \bottomrule
     \end{tabular}
     \caption{Composition of the two datasets used in this study and the chosen Gibbs hyperparameters $\alpha$ and $\beta$. Note that the KOS dataset used is a reduced version of the original KOS dataset, which contains 3430 documents.}
@@ -133,7 +133,7 @@ Two datasets were classified using LDA: Classic400, a collection of English docu
 % HYPERPARAMETERS
 %
 \subsection{Hyperparameters}
-For both datasets we apply LDA with three topics ($K = 3$). Since $\alpha$ is postively correlated to the number of topics present per document and we are only considering three topics, we chose values of $\alpha \leq 1$, which implies that every document contains only a few topics. Likewise, we chose values of $\beta \leq 1$, which implies that every word in every document corresponds to a small number of topics. Previous studies have looked into the effect of $\alpha$ and $\beta$ on the cluserting results for LDA models, some going so far as to suggest likely values based on the number of topics in a dataset (see \cite{Griffiths2004}). However, for the purposes of this study our selection criteria of $\alpha$ and $\beta$ is only that they are both less than or equal to one, and we have therefore chosen to omit any sort of optimization of their values (see Table \ref{tab:datasets}).
+For both datasets we apply LDA with three topics ($K = 3$). Since $\alpha$ is postively correlated to the number of topics present per document and we are only considering three topics, we chose values of $\alpha << 1$, which implies that every document contains only a few topics. Likewise, we chose values of $\beta << 1$, which implies that every word in every document corresponds to a small number of topics. Previous studies have looked into the effect of $\alpha$ and $\beta$ on the cluserting results for LDA models, some going so far as to suggest likely values based on the number of topics in a dataset (see \cite{Griffiths2004}). However, for the purposes of this study our selection criteria of $\alpha$ and $\beta$ is only that they are both small, and we have therefore chosen to omit any sort of optimization of their values (see Table \ref{tab:datasets}).
 
 
 %
@@ -156,7 +156,7 @@ Figure \ref{fig:cluserting} shows the clustering of documents relative to each t
     \centering
     \mbox{\subfigure[Classic400]{\includegraphics[width=0.4\textwidth]{classic400_thetas.pdf}} \quad
         \subfigure[KOS]{\includegraphics[width=0.4\textwidth]{kos_thetas.pdf} }}
-    \caption{Clustering of documents based on their $\theta_1$, $\theta_2$ and $\theta_3$, projected on a triangular simplex. Documents in Classic400 are labeled based on their true labels (topic 1: blue solid circles, topic 2: black empty squares, topic 3: red solid triangles) while documents in KOS are have the same marker label as the true labels are unknown.}
+    \caption{Clustering of documents based on their $\theta_1$, $\theta_2$ and $\theta_3$, projected on a triangular simplex. Documents in Classic400 are labeled based on their true labels (topic 1: white circles with black edges, topic 2: black solid squares, topic 3: gray solid triangles) while documents in KOS are have the same marker label as the true labels are unknown.}
     \label{fig:cluserting}
 \end{figure}
 

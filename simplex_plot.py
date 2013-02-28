@@ -92,12 +92,12 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
     ax.set_ylim([-0.2, 1.2])
 
     # plot formatting
-    kwargs = {'s': 100}
+    kwargs = {'s': 120}
     markers = ['o', 's', '^']
     if grayscale is False:
         colors = ['#268bd2', '#000000', '#dc322f']
     else:
-        colors = ['#000000', '#000000', '#999999']
+        colors = ['w', 'k', '#999999']
 
     # plot data
     if dataset is 'classic400':
@@ -113,11 +113,11 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
 
         # plot data onto simplex
         ax.scatter(simplex1[:, 0], simplex1[:, 1], label='Topic 1',
-                   marker=markers[0], color=colors[0], **kwargs)
+                   marker=markers[0], color=colors[0], edgecolor='k', **kwargs)
         ax.scatter(simplex2[:, 0], simplex2[:, 1], label='Topic 2',
-                   marker=markers[1], color=colors[1], facecolors='#cccccc', **kwargs)
+                   marker=markers[1], color=colors[1], edgecolor='k', **kwargs)
         ax.scatter(simplex3[:, 0], simplex3[:, 1], label='Topic 3',
-                   marker=markers[2], color=colors[2], **kwargs)
+                   marker=markers[2], color=colors[2], edgecolor='k', **kwargs)
 
         plot_name = 'classic400_thetas.pdf'
 
@@ -127,7 +127,7 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
 
         # plot data onto simplex
         ax.scatter(simplex1[:, 0], simplex1[:, 1], label='Topic 1',
-                   marker='D', color='#2aa198', edgecolor='k', **kwargs)
+                   marker='D', color='#888888', edgecolor='k', **kwargs)
 
         plot_name = 'kos_thetas.pdf'
 
@@ -144,13 +144,13 @@ def plotSimplex(thetas, dataset, grayscale=True, save=False, show=True):
 #
 # Classic400
 #
-thetas_classic400 = np.genfromtxt('classic400/classic400_thetas_2.csv',
+thetas_classic400 = np.genfromtxt('classic400/classic400_thetas.csv',
                                   delimiter=',')
 
 # convert from log-10
 thetas_classic400 = np.exp(thetas_classic400)
 
-plotSimplex(thetas_classic400, 'classic400', grayscale=False, save=True)
+plotSimplex(thetas_classic400, 'classic400', grayscale=True, save=True)
 
 
 #
@@ -161,4 +161,4 @@ thetas_kos = np.genfromtxt('KOS400/KOS400_thetas.csv', delimiter=',')
 # convert from log-10
 thetas_kos = np.exp(thetas_kos)
 
-plotSimplex(thetas_kos, 'KOS', grayscale=False, save=True)
+plotSimplex(thetas_kos, 'KOS', grayscale=True, save=True)
