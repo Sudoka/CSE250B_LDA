@@ -149,13 +149,13 @@ For both datasets we chose the Gibbs Sampling stopping criteria as 100 epochs, a
 \subsection{Results}
 
 \subsubsection{Document Topic Clustering}
-Figure \ref{fig:cluserting} shows the clustering of documents relative to each topic as projected onto a triangular simplex, where the each vertex indicates $\theta = 1$ the denoted topic.
+Figure \ref{fig:cluserting} shows the clustering of documents relative to each topic as projected onto a triangular simplex, where the each vertex indicates $\theta = 1$ for the denoted topic.
 
 
 \begin{figure}[t]
     \centering
-    \mbox{\subfigure[Classic400]{\includegraphics[width=0.4\textwidth]{classic400_thetas.pdf}} \quad
-        \subfigure[KOS]{\includegraphics[width=0.4\textwidth]{kos_thetas.pdf} }}
+    \mbox{\subfigure[Classic400]{\includegraphics[width=0.5\textwidth]{classic400_thetas.pdf}} \quad
+        \subfigure[KOS]{\includegraphics[width=0.5\textwidth]{kos_thetas.pdf} }}
     \caption{Clustering of documents based on their $\theta_1$, $\theta_2$ and $\theta_3$, projected on a triangular simplex. Documents in Classic400 are labeled based on their true labels (topic 1: white circles with black edges, topic 2: black solid squares, topic 3: gray solid triangles) while documents in KOS are have the same marker label as the true labels are unknown.}
     \label{fig:cluserting}
 \end{figure}
@@ -175,16 +175,16 @@ If a LDA model is setup to classify more than 4 topics, then a simplex plot will
         \cmidrule{2-4} \cmidrule{6-8}
         \bf{Rank} & \bf{Topic 1} & \bf{Topic 2} & \bf{Topic 3} && \bf{Topic 1} & \bf{Topic 2} & \bf{Topic 3} \\
         \midrule
-         1 & patients    & boundary   & system     && november & bush       & kerry \\
-         2 & ventricular & layer      & retrieval  && kerry    & campaign   & time \\
-         3 & cases       & wing       & scientific && vote     & republican & bush \\
-         4 & fatty       & mach       & research   && voting   & race       & people \\
-         5 & left        & supersonic & language   && polls    & war        & jul \\
-         6 & acids       & wings      & systems    && house    & general    & party \\
-         7 & nickel      & velocity   & journals   && poll     & elections  & john \\
-         8 & aortic      & ratio      & field      && bush     & percent    & democratic \\
-         9 & blood       & shock      & methods    && senate   & state      & media \\
-        10 & glucose     & effects    & subjects   && governor & news       & voters \\
+         1 & system     & boundary      & patients      && bush             & republican    & november \\
+         2 & research   & layer         & ventricular   && kerry            & race          & kerry \\
+         3 & scientific & wing          & fatty         && war              & house         & voting \\
+         4 & retrieval  & mach          & cases         && iraq             & party         & vote \\
+         5 & problems   & supersonic    & nickels       && people           & elections     & bush \\
+         6 & language   & wings         & left          && president        & campaign      & polls \\
+         7 & science    & ratio         & acids         && general          & democratic    & poll \\
+         8 & methods    & velocity      & aortic        && voters           & state         & governor \\ 
+         9 & systems    & effects       & blood         && administration   & democrats     & senate \\
+        10 & subject    & shocks        & normal        && time             & senate        & republicans \\
         \bottomrule
 	\end{tabular}
 	\caption{Ten most commonly occured words for each topic classification for the classic400 and KOS datasets. Rank indicates how frequently a word appears in each topic, with 1 being the most occurred.}
