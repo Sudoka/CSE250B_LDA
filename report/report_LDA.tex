@@ -46,7 +46,7 @@ University of California, San Diego \\
 % ABSTRACT
 %-----------------------------------------------------------------------------
 \begin{abstract}
-LDA, Gibbs sampling, topic classification of documents, datasets used, results and their meaning, conclusions
+Collapsed Gibbs Sampling is evaluated as training algorithm for Latent Dirichlet Allocation (LDA), an unsupervised learning model. LDA models are trained to classify text documents from two datasets: Classic400, a colelction of English documents from three research areas (library science, aeronautics, and medicine); and KOS, a collection of English blog posts from dailykos.com. For both datasets, the documents were classified into three topics and the LDA is evaluated based on the clustering of documents and lists of the most commonly occurred words for each topic. LDA of the Classic400 dataset showed distinct clustering of topics, and the list of most common words for each topic were cohesive (topic 1: system, research, scientific; topic 2: boundary, layer, wing; topic 3: patients, ventricular, fatty). Meanwhile, LDA of the KOS dataset show less distinct clustering and the list of most common words for each topic showed overlap, specifically, all topics contained words related to the 2008 US President campaign and election (topic 1: bush, kerry, war; topic 2: republican, race, house; topic 3: november, kerry, voting). The poor results of the KOS dataset indicate a lack of variety in the the studied dataset, which is a 400 document subset of the original 3430 document KOS dataset, rather than an issue with the LDA or Gibbs Sampling method. Overall, Gibbs Sampling proved to be a good learning algorithm for LDA models.
 \end{abstract}
 
 
@@ -54,44 +54,53 @@ LDA, Gibbs sampling, topic classification of documents, datasets used, results a
 %-----------------------------------------------------------------------------
 % INTRODUCTION
 %-----------------------------------------------------------------------------
-\section{Introduction (David)}
+\section{Introduction}
 \label{sec:intro}
-
-Introduce topic classification of documents. Then transition into formal definitions of LDA and Gibbs Sampling.
-
-Elkan's lecture notes \cite{CSE250B}
-
 
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
 
-Latent Dirichlet Allocation (LDA) is a topic model that uses multinomial distributions, where a multinomial distributions is defined as:
+Latent Dirichlet Allocation (LDA) is an unsupervised learning model for determining topic classification of documents based on their vocabulary. It assumes that the generation of the documents was a probalistic process, and therefore, the parameters used in the generation can be learned based on the results. Specifically, LDA assumes thegeneration used the Dirichlet distribution, which is defined as a probability density function of all multinomial parameter vectors. Mathematically it is defined as:
 \begin{equation}
-    p(x;\theta) = \frac{n!}{\prod_{j=1}^m x_j !} \prod_{j=1}^m \theta_j^{x_j}
+    p(\gamma | \alpha) = \frac{1}{D(\alpha)} \prod_{s=1}^{m} \gamma_{s}^{\alpha_s - 1} \\
 \end{equation}
-where $x$ is a vector of non-negative integers and $\theta$ is a vector of real-valued parameters.
-
-
-\begin{equation}
-    p(\gamma | \alpha) = \frac{1}{D(\alpha)} \prod_{s=1}^{m} \gamma_{s}^{\alpha_s - 1}
-\end{equation}
-
+where $\alpha$ is the parameter vector of length $m$ and $D$ a normalizing constant
 \begin{equation}
     D(\alpha) = \int_{\gamma} \prod_{s=1}^m \gamma_s^{\alpha_s - 1}
 \end{equation}
 
+$D$ can also be defined explicitly as
 \begin{equation}
     D(\alpha) = \frac{\prod_{s=1}^m \Gamma(\alpha_s)}{\Gamma (\sum_{s=1}^m \alpha_s )}
 \end{equation}
 
+The LDA generative process is defined in \cite{CSE250B} as:
+\begin{enumerate}
+    \item Given: Dirichlet distribution using $\alpha$ (parameter vector length $K$)
+    \item Given: Dirichlet distribution using $\beta$ (parameter vector length $V$)
+    \item for topic 1 to K:
+        \begin{enumerate}
+            \item draw multinomial distribution using $\phi_k$ based on $\beta$
+        \end{enumerate}
+    \item for document 1 to M:
+        \begin{enumerate}
+            \item draw multinomial $\theta$ based on $\alpha$
+            \item for each word in document
+                \begin{enumerate}
+                    \item draw topic $z$ using $\theta$
+                    \item draw word $w$ using $\phi_z$
+                \end{enumerate}
+        \end{enumerate}
+\end{enumerate}
 
 
 \subsection{Collapsed Gibbs Sampling}
 \label{sec:gibbs}
-
+Collapsed Gibbs Sampling is a learning method for indirectly determining $\theta$ for each document and $\phi_k$ for each topic by inferring the hidden value $z$ for each word in each document \cite{CSE250B}. Learning of $\theta$ and $\phi_k$ is based on:
 \begin{equation}
     p(z_i = j | \bar{z}', \bar{w}) \propto \frac{q_{j w_i}' + \beta_{w_i}}{\sum_t q_{jt}' + \beta_t} \frac{n_{mj}' + \alpha_j}{\sum_k n_{mk}' + \alpha_k}
 \end{equation}
+where $\bar{w}$ is the sequence of words in the vocabulary.
 
 
 
